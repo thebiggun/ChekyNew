@@ -66,7 +66,7 @@ const Billing = () => {
     const fetchProductData = async (gtin, expiryDate) => {
         try {
             console.log("Fetching product data for GTIN:", gtin);
-            const response = await fetch(`http://localhost:5000/api/getProducts/${gtin}`);
+            const response = await fetch(`https://checky.onrender.com/api/getProducts/${gtin}`);
 
             if (!response.ok) {
                 throw new Error(`HTTP Error! Status: ${response.status}`);
@@ -87,7 +87,7 @@ const Billing = () => {
     const handleGenerateQRCode = async () => {
         try {
             setShowQRCode(true);
-            const response = await fetch("http://localhost:5000/api/decreaseCount", {
+            const response = await fetch("https://checky.onrender.com/api/decreaseCount", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ cart }), // ✅ This correctly sends an array
