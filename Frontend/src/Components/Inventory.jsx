@@ -8,7 +8,7 @@ const Inventory = () => {
     const [quantity, setQuantity] = useState("");
 
     useEffect(() => {
-        fetch("https://checky.onrender.com/api/getInventory")
+        fetch("http://localhost5000/api/getInventory")
             .then((response) => response.json())
             .then((data) => setInventory(data))
             .catch((error) => console.error("Error fetching inventory:", error));
