@@ -5,7 +5,7 @@ const Restocking = () => {
     const [minItem, setMinItem] = useState(10); 
 
     useEffect(() => {
-        fetch(`http://localhost5000/api/getRestock/${minItem}`)
+        fetch(`http://localhost:5000/api/getRestock/${minItem}`)
             .then((response) => response.json())
             .then((data) => setItems(data))  // Fixed incorrect state update
             .catch((error) => console.error("Error fetching restocking:", error));
