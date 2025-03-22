@@ -10,7 +10,7 @@ const App = () => {
   return (
     <Router>
       <div className="flex bg-gray-950">
-        <div className="w-50">
+        <div className="w-50 sticky top-0 h-screen">
           <NavBar />
         </div>
         <div className="w-full p-4 ">
@@ -21,7 +21,6 @@ const App = () => {
             <Route path="/flash-sale" element={<FlashSale />} />
             <Route path="*" element={<Navigate to="/billing" />} />
             <Route path="/restocking" element={<Restocking />} />
-
           </Routes>
         </div>
       </div>

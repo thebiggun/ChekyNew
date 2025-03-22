@@ -9,7 +9,7 @@ const NavBar = () => {
         { name: "Billing", path: "/billing", icon: <MdOutlineReceiptLong className="text-3xl" /> },
         { name: "Inventory", path: "/inventory", icon: <MdOutlineInventory2 className="text-3xl" /> },
         { name: "Flash Sale", path: "/flash-sale", icon: <PiLightning className="text-3xl" /> },
-        { name: "Restocking", path: "/restocking", icon: <MdOutlineSettingsBackupRestore className="text-3xl" /> },
+        { name: "Restocking", path: "/restocking", icon: <MdOutlineSettingsBackupRestore className="text-3xl" /> }
     ];
 
     return (

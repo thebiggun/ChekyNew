@@ -8,8 +8,10 @@ import { QRCodeCanvas } from "qrcode.react"; // Importing QR Code library
 
 const Billing = () => {
     const [cart, setCart] = useState([]);
+    const [spclCart, setSpclCart] = useState([]);
     const [barcodeImage, setBarcodeImage] = useState(null);
     const [showQRCode, setShowQRCode] = useState(false);
+    const [showSpecialCart, setShowSpecialCart] = useState(false); // State to toggle between carts
     const fileInputRef = useRef(null);
 
     const handleButtonClick = () => {
@@ -66,7 +68,7 @@ const Billing = () => {
     const fetchProductData = async (gtin, expiryDate) => {
         try {
             console.log("Fetching product data for GTIN:", gtin);
-            const response = await fetch(`http://localhost:5000/api/getProducts/${gtin}`);
+            const response = await fetch(`https://checky.onrender.com/api/getProducts/${gtin}`);
 
             if (!response.ok) {
                 throw new Error(`HTTP Error! Status: ${response.status}`);
@@ -87,7 +89,7 @@ const Billing = () => {
     const handleGenerateQRCode = async () => {
         try {
             setShowQRCode(true);
-            const response = await fetch("http://localhost:5000/api/decreaseCount", {
+            const response = await fetch("https://checky.onrender.com/api/decreaseCount", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ cart }), // ✅ This correctly sends an array
@@ -120,40 +122,97 @@ const Billing = () => {
                 : product.Price !== undefined && !isNaN(Number(product.Price)) ? Number(product.Price)
                     : 0; // Default to 0 if no valid price is found
 
-        setCart((prevCart) => {
-            const existingItemIndex = prevCart.findIndex((item) => item.GTIN === product.GTIN);
-
-            if (existingItemIndex !== -1) {
-                return prevCart.map((item, index) =>
-                    index === existingItemIndex ? { ...item, quantity: item.quantity + 1 } : item
-                );
-            } else {
-                return [...prevCart, { ...product, Price: finalPrice, quantity: 1 }];
-            }
-        });
+        if(product.Name === "Benadryl" || product.Name === "Crocin" || product.Name === "Dolo" || product.Name === "Saridon" || product.Name === "Montair"){
+            setSpclCart((prevCart) => {
+                const existingItemIndex = prevCart.findIndex((item) => item.GTIN === product.GTIN);
+    
+                if (existingItemIndex !== -1) {
+                    return prevCart.map((item, index) =>
+                        index === existingItemIndex ? { ...item, quantity: item.quantity + 1 } : item
+                    );
+                } else {
+                    return [...prevCart, { ...product, Price: finalPrice, quantity: 1 }];
+                }
+            });
+        }
+        else{
+            setCart((prevCart) => {
+                const existingItemIndex = prevCart.findIndex((item) => item.GTIN === product.GTIN);
+    
+                if (existingItemIndex !== -1) {
+                    return prevCart.map((item, index) =>
+                        index === existingItemIndex ? { ...item, quantity: item.quantity + 1 } : item
+                    );
+                } else {
+                    return [...prevCart, { ...product, Price: finalPrice, quantity: 1 }];
+                }
+            });
+        }
     };
 
     return (
         <div className="w-full px-8 py-4" style={{ fontFamily: "Iansui, sans-serif" }}>
             <h1 className="text-xl text-white font-bold mb-4">Your Cart</h1>
 
+            {/* Buttons to toggle between carts */}
+            <div className="flex justify-center gap-4 mb-4">
+                
+                <button
+                    onClick={() => setShowSpecialCart(true)}
+                    className={`px-4 py-2 rounded-lg cursor-pointer ${
+                        showSpecialCart ? "bg-blue-600 text-white" : "bg-gray-300 text-gray-700"
+                    }`}
+                >
+                    Pharmacy
+                </button>
+
+                <button
+                    onClick={() => setShowSpecialCart(false)}
+                    className={`px-4 py-2 cursor-pointer rounded-lg ${
+                        !showSpecialCart ? "bg-blue-600 text-white" : "bg-gray-300 text-gray-700"
+                    }`}
+                >
+                    SuperMarket
+                </button>
+            </div>
+
             <div className="w-full mt-4 flex items-center justify-center">
-                {cart.length === 0 ? (
-                    <div className="flex flex-col items-center h-80">
-                        <Lottie animationData={EmptyCart} className="w-60" />
-                        <p className="text-gray-800 mt-2 font-semibold">Your cart is empty!</p>
-                    </div>
+                {showSpecialCart ? (
+                    spclCart.length === 0 ? (
+                        <div className="flex flex-col items-center h-80">
+                            <Lottie animationData={EmptyCart} className="w-60" />
+                            <p className="text-gray-800 mt-2 font-semibold">Your special cart is empty!</p>
+                        </div>
+                    ) : (
+                        <div className="w-full p-4 bg-white shadow-md rounded-md flex flex-col h-80">
+                            <div className="flex-1 overflow-auto space-y-4 pr-2">
+                                {spclCart.map((item, index) => (
+                                    <CartItem key={index} item={item} />
+                                ))}
+                            </div>
+                            <div className="mt-4 py-2 border-t border-gray-300 font-bold text-lg text-center bg-white sticky bottom-0">
+                                Total: ₹{spclCart.reduce((acc, item) => acc + Number(item.Price) * item.quantity, 0)}
+                            </div>
+                        </div>
+                    )
                 ) : (
-                    <div className="w-full p-4 bg-white shadow-md rounded-md flex flex-col h-80">
-                        <div className="flex-1 overflow-auto space-y-4 pr-2">
-                            {cart.map((item, index) => (
-                                <CartItem key={index} item={item} />
-                            ))}
+                    cart.length === 0 ? (
+                        <div className="flex flex-col items-center h-80">
+                            <Lottie animationData={EmptyCart} className="w-60" />
+                            <p className="text-gray-800 mt-2 font-semibold">Your cart is empty!</p>
                         </div>
-                        <div className="mt-4 py-2 border-t border-gray-300 font-bold text-lg text-center bg-white sticky bottom-0">
-                            Total: ₹{cart.reduce((acc, item) => acc + Number(item.Price) * item.quantity, 0)}
+                    ) : (
+                        <div className="w-full p-4 bg-white shadow-md rounded-md flex flex-col h-80">
+                            <div className="flex-1 overflow-auto space-y-4 pr-2">
+                                {cart.map((item, index) => (
+                                    <CartItem key={index} item={item} />
+                                ))}
+                            </div>
+                            <div className="mt-4 py-2 border-t border-gray-300 font-bold text-lg text-center bg-white sticky bottom-0">
+                                Total: ₹{cart.reduce((acc, item) => acc + Number(item.Price) * item.quantity, 0)}
+                            </div>
                         </div>
-                    </div>
+                    )
                 )}
             </div>
 
@@ -200,11 +259,11 @@ const Billing = () => {
                                 value={JSON.stringify(
                                     {
                                         "cart": {
-                                            "items": cart,
-                                            "total_price": cart.reduce((acc, item) => acc + Number(item.Price) * item.quantity, 0),
+                                            "items":  [...cart, ...spclCart],
+                                            "total_price": [...cart, ...spclCart].reduce((acc, item) => acc + Number(item.Price) * item.quantity, 0),
                                             "currency": "INR",
                                             "discount": 0,
-                                            "final_price": cart.reduce((acc, item) => acc + Number(item.Price) * item.quantity, 0)
+                                            "final_price": [...cart, ...spclCart].reduce((acc, item) => acc + Number(item.Price) * item.quantity, 0)
                                         }
                                     }
                                 )}

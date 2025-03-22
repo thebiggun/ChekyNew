@@ -8,7 +8,7 @@ const Inventory = () => {
     const [quantity, setQuantity] = useState("");
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/getInventory")
+        fetch("https://checky.onrender.com/api/getInventory")
             .then((response) => response.json())
             .then((data) => setInventory(data))
             .catch((error) => console.error("Error fetching inventory:", error));
@@ -69,7 +69,7 @@ const Inventory = () => {
         }
 
         try {
-            const response = await fetch("http://localhost:5000/api/addToInventory", {
+            const response = await fetch("https://checky.onrender.com/api/addToInventory", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ GTIN: scannedGTIN, Quantity: quantity, ExpiryDate: expiryDate })
