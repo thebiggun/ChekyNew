@@ -13,7 +13,7 @@ const Restocking = () => {
 
     return (
         <div className="container mx-auto px-4 py-6" style={{ fontFamily: "Iansui, sans-serif" }}>
-            <h1 className="text-xl font-bold mb-4 text-white">Restocking</h1>
+            <h1 className="text-xl font-bold mb-4 text-gray-600">Restocking</h1>
 
             <div className="grid grid-cols-2 gap-4 h-120 overflow-y-scroll">
                 {items.length > 0 ? (
@@ -36,7 +36,7 @@ const Restocking = () => {
                 type="number"
                 value={minItem}
                 onChange={(e) => setMinItem(e.target.value)}
-                className="border text-white rounded-xl mt-10 p-2 mb-4 w-full"
+                className="border text-gray-600 rounded-xl mt-10 p-2 mb-4 w-full"
                 placeholder="Set min quantity"
             />
         </div>

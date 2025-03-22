@@ -69,7 +69,7 @@ const Billing = () => {
     const fetchProductData = async (gtin, expiryDate) => {
         try {
             console.log("Fetching product data for GTIN:", gtin);
-            const response = await fetch(`https://checky.onrender.com//api/getProducts/${gtin}`);
+            const response = await fetch(`https://checky.onrender.com/api/getProducts/${gtin}`);
 
             if (!response.ok) {
                 throw new Error(`HTTP Error! Status: ${response.status}`);
@@ -90,7 +90,7 @@ const Billing = () => {
     const handleGenerateQRCode = async () => {
         try {
             setShowQRCode(true);
-            const response = await fetch("http://localhost5000/api/decreaseCount", {
+            const response = await fetch("https://checky.onrender.com/api/decreaseCount", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ cart }), // ✅ This correctly sends an array
@@ -153,7 +153,7 @@ const Billing = () => {
 
     return (
         <div className="w-full px-8 py-4" style={{ fontFamily: "Iansui, sans-serif" }}>
-            <h1 className="text-xl text-white font-bold mb-4">Your Cart</h1>
+            <h1 className="text-xl text-gray-700 font-bold mb-4">Your Cart</h1>
 
             {/* Buttons to toggle between carts */}
             <div className="flex justify-center gap-4 mb-4">
@@ -182,7 +182,7 @@ const Billing = () => {
                     spclCart.length === 0 ? (
                         <div className="flex flex-col items-center h-80">
                             <Lottie animationData={EmptyCart} className="w-60" />
-                            <p className="text-gray-800 mt-2 font-semibold">Your special cart is empty!</p>
+                            <p className="text-gray-800 mt-2 font-semibold">Your Medical cart is empty!</p>
                         </div>
                     ) : (
                         <div className="w-full p-4 bg-white shadow-md rounded-md flex flex-col h-80">

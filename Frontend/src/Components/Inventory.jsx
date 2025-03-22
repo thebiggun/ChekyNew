@@ -8,7 +8,7 @@ const Inventory = () => {
     const [quantity, setQuantity] = useState("");
 
     useEffect(() => {
-        fetch("https://checky.onrender.com//api/getInventory")
+        fetch("https://checky.onrender.com/api/getInventory")
             .then((response) => response.json())
             .then((data) => setInventory(data))
             .catch((error) => console.error("Error fetching inventory:", error));
@@ -96,7 +96,7 @@ const Inventory = () => {
 
     return (
         <div className="container mx-auto px-4 py-6" style={{ fontFamily: "Iansui, sans-serif" }}>
-            <h1 className="text-xl text-white font-bold mb-4">Inventory</h1>
+            <h1 className="text-xl text-gray-600 font-bold mb-4">Inventory</h1>
 
             <div className="grid grid-cols-2 gap-4 h-100 overflow-y-scroll">
                 {inventory.map((item) => (
@@ -139,7 +139,7 @@ const Inventory = () => {
                     placeholder="Enter Quantity"
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
-                    className="px-2 py-1 border border-gray-300 text-white rounded"
+                    className="px-2 py-1 border border-gray-300 text-gray-600 rounded"
                 />
                 <button
                     onClick={handleAddToInventory}

@@ -9,7 +9,7 @@ const FlashSale = () => {
     useEffect(() => {
         const fetchExpiringProducts = async () => {
             try {
-                const response = await fetch("https://checky.onrender.com//api/getExpired");
+                const response = await fetch("https://checky.onrender.com/api/getExpired");
                 const data = await response.json();
                 setProducts(data);
             } catch (error) {
@@ -28,7 +28,7 @@ const FlashSale = () => {
     // Update Flash Price API call
     const updatePrice = async (GTIN) => {
         try {
-            const response = await fetch("http://localhost5000/api/updateDiscount", {
+            const response = await fetch("https://checky.onrender.com/api/updateDiscount", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -50,7 +50,7 @@ const FlashSale = () => {
 
     return (
         <div className="p-6 " style={{ fontFamily: "Iansui, sans-serif" }}>
-            <h1 className="text-xl text-white font-bold mb-4">Flash Sale - Expiring Soon</h1>
+            <h1 className="text-xl text-gray-600 font-bold mb-4">Flash Sale - Expiring Soon</h1>
             {products.length === 0 ? (
                 <p>No products are about to expire.</p>
             ) : (
@@ -58,7 +58,7 @@ const FlashSale = () => {
                     {products.map((item) => (
                         <div
                             key={item.GTIN}
-                            className="border p-4 rounded-lg shadow-lg bg-blue-50" // Light background color
+                            className="border p-4 rounded-lg shadow-lg bg-white" // Light background color
                         >
                             <img
                                 src={item.Image}
