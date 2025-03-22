@@ -9,7 +9,7 @@ import Restocking from "./Components/Restocking";
 const App = () => {
   return (
     <Router>
-      <div className="flex bg-gray-950">
+      <div className="flex bg-[#E8E8E8]">
         <div className="w-50 sticky top-0 h-screen">
           <NavBar />
         </div>
