@@ -90,7 +90,7 @@ const Billing = () => {
     const handleGenerateQRCode = async () => {
         try {
             setShowQRCode(true);
-            const response = await fetch("https://checky.onrender.com//api/decreaseCount", {
+            const response = await fetch("http://localhost5000/api/decreaseCount", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ cart }), // ✅ This correctly sends an array

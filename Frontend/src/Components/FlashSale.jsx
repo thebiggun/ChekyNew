@@ -28,7 +28,7 @@ const FlashSale = () => {
     // Update Flash Price API call
     const updatePrice = async (GTIN) => {
         try {
-            const response = await fetch("https://checky.onrender.com//api/updateDiscount", {
+            const response = await fetch("http://localhost5000/api/updateDiscount", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
