@@ -9,7 +9,7 @@ const FlashSale = () => {
     useEffect(() => {
         const fetchExpiringProducts = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/getExpired");
+                const response = await fetch("http://localhost5000/api/getExpired");
                 const data = await response.json();
                 setProducts(data);
             } catch (error) {
