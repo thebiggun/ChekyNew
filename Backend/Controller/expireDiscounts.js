@@ -8,7 +8,7 @@ const checkAndExpireDiscounts = async () => {
         const today = new Date().toISOString().split("T")[0];
 
         const expiredProducts = await Inventory.updateMany(
-            { ExpiryDate: { $lt: today }, FlashPrice: { $ne: -1 } },
+            { ExpiryDate: { $lt: today } },
             { $set: { FlashPrice: -1, Quantity: 0, ExpiryDate: "" } } // Reset ExpiryDate to empty string
         );
 
